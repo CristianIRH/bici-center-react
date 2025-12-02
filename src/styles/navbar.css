@@ -1,0 +1,23 @@
+.navbar {
+    width: 100%;
+    background: #ffffff;
+    padding: 12px 0;
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    border-bottom: 2px solid #e5e5e5;
+}
+
+.nav-item {
+    font-size: 17px;
+    color: #2a2a2a;
+    cursor: pointer;
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    transition: 0.2s;
+}
+
+.nav-item:hover {
+    color: #007bd5;
+}
