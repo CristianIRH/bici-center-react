@@ -3,20 +3,21 @@ import { Routes, Route, useLocation, Link, Navigate } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 
-import Bicicletas from "./pages/Bicicletas";
-import Repuestos from "./pages/Repuestos";
-import Accesorios from "./pages/Accesorios";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import Dashboard from "./pages/Dashboard";
-import Mantenimiento from "./pages/Mantenimiento";
-import Home from "./pages/Home";
+// Todas las importaciones de páginas en minúsculas y sin extensión
+import Bicicletas from "./pages/bicicletas";
+import Repuestos from "./pages/repuestos";
+import Accesorios from "./pages/accesorios";
+import Login from "./pages/login";
+import Register from "./pages/registrobici";
+import Mantenimiento from "./pages/mantenimiento";
+import Home from "./pages/master";
 
 import "./styles/App.css";
 
 import logo from "./assets/logo.png";
-import Carrito from "./pages/Carrito";
-import ProductDetail from "./pages/ProductDetail";
+import Carrito from "./pages/carrito";
+import ProductDetail from "./pages/vistaProducto";
+
 import { useSearch } from "./contexts/SearchContext";
 
 function App() {
@@ -57,10 +58,10 @@ function App() {
         <Route path="/accesorios" element={<Accesorios />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/master" element={<Home />} />
         <Route path="/mantenimiento" element={<Mantenimiento />} />
         <Route path="/carrito" element={<Carrito />} />
-        <Route path="/product/:id" element={<ProductDetail />} />
+        <Route path="/product/:tipoProducto/:id" element={<ProductDetail />} />
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
 

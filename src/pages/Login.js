@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthContext";
 import logo from "../assets/logo.png";
-import "../styles/pages.css";   // o el CSS que uses para el login
+import "../styles/pages.css";
 
 function Login() {
   const navigate = useNavigate();
@@ -9,16 +9,12 @@ function Login() {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    // Aquí normalmente validarías credenciales contra un API.
-    // Para este ejemplo guardamos el estado local de 'logueado'.
     login();
-    navigate("/dashboard");
+    navigate("/master");
   };
 
   return (
     <div className="login-container">
-
-      {/* LOGO CLICKABLE */}
       <Link to="/" className="login-logo">
         <img src={logo} alt="BiciCenter" width="70" />
       </Link>
@@ -42,7 +38,7 @@ function Login() {
         </form>
 
         <p className="register-text">
-          ¿Aún no tienes cuenta? <Link to="/register">Regístrate aquí</Link>
+          ¿No tienes cuenta? <Link to="/register">Regístrate</Link>
         </p>
       </div>
     </div>

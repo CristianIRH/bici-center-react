@@ -5,10 +5,10 @@ import { useMemo, useState } from "react";
 import CardProducto from "../components/CardProducto";
 
 const SAMPLE_PRODUCTS = [
-  { id: 1, title: "Cadena Shimano", desc: "Repuesto original, alta durabilidad.", marca: "Shimano", price: 12000 },
-  { id: 2, title: "Freno Tektro", desc: "Freno delantero compatible.", marca: "Tektro", price: 8000 },
-  { id: 3, title: "Pedal Plata", desc: "Pedal estándar aluminio.", marca: "Generic", price: 4000 },
-  { id: 4, title: "Piñón 8V", desc: "Piñón de transmisión 8 velocidades.", marca: "Shimano", price: 15000 },
+  { id: 1, title: "Cadena Shimano", desc: "Repuesto original, alta durabilidad.", marca: "Shimano", price: 12000, type: 'repuesto' },
+  { id: 2, title: "Freno Tektro", desc: "Freno delantero compatible.", marca: "Tektro", price: 8000, type: 'repuesto' },
+  { id: 3, title: "Pedal Plata", desc: "Pedal estándar aluminio.", marca: "Generic", price: 4000, type: 'repuesto' },
+  { id: 4, title: "Piñón 8V", desc: "Piñón de transmisión 8 velocidades.", marca: "Shimano", price: 15000, type: 'repuesto' },
 ];
 
 function Repuestos() {
@@ -26,13 +26,18 @@ function Repuestos() {
   const filtered = useMemo(() => {
     let list = SAMPLE_PRODUCTS.slice();
 
+    // 1. Filtrar por término de búsqueda (del Navbar)
     if (searchTerm) {
-      const s = searchTerm.toLowerCase();
-      list = list.filter((p) => p.title.toLowerCase().includes(s) || p.desc.toLowerCase().includes(s));
+      const term = searchTerm.toLowerCase();
+      list = list.filter(p => p.title.toLowerCase().includes(term) || p.desc.toLowerCase().includes(term));
     }
 
-    if (applied.brand) list = list.filter((p) => p.marca === applied.brand);
+    // 2. Filtrar por marca
+    if (applied.brand) {
+        list = list.filter(p => p.marca === applied.brand);
+    }
 
+    // 3. Ordenar
     if (applied.order) {
       if (applied.order === "name-asc") list.sort((a, b) => a.title.localeCompare(b.title));
       if (applied.order === "name-desc") list.sort((a, b) => b.title.localeCompare(a.title));
@@ -44,26 +49,21 @@ function Repuestos() {
   }, [searchTerm, applied]);
 
   return (
-    <div style={{ padding: "0 60px" }}>
-      <h1 style={{ paddingLeft: 0 }} className="titulo-seccion">🔥 Repuestos</h1>
+    <div className="container my-5">
+      <h1 className="titulo-seccion fw-bold mb-4">⚙️ Repuestos</h1>
 
       <FilterBar brands={brands} onApply={handleApply} onClear={handleClear} />
 
-      <div style={{ marginBottom: 12 }}>Mostrando {filtered.length} producto{filtered.length !== 1 ? "s" : ""}</div>
+      <div className="results-info mb-4">
+        📊 Mostrando <strong>{filtered.length}</strong> producto{filtered.length !== 1 ? "s" : ""}
+      </div>
 
-      <div style={{ display: "flex", gap: 24, flexWrap: "wrap", justifyContent: "center" }}>
+      <div className="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
         {filtered.map((product) => (
-          <div key={product.id} style={{ flex: "0 1 300px" }}>
-            <CardProducto product={{ id: product.id, imagen: `https://via.placeholder.com/400x250?text=${encodeURIComponent(product.title)}`, nombre: product.title, precio: product.price, desc: product.desc, price: product.price }} />
-          </div>
+            <div className="col" key={product.id}>
+                <CardProducto product={product} type="repuesto" />
+            </div>
         ))}
-
-        {filtered.length === 0 && (
-          <div style={{ width: "100%", textAlign: "center" }}>
-            <p>No se encontraron productos que coincidan con "{searchTerm}".</p>
-          </div>
-        )}
-
       </div>
     </div>
   );
